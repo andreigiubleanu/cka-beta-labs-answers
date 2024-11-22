@@ -1,0 +1,81 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: restricted
+spec: {}
+status: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: access
+  labels:
+    type: access
+spec: {}
+status: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lab157-network-policy
+  namespace: restricted
+spec:            
+  podSelector:
+    matchLabels:
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          type: access
+    - podSelector:
+        matchLabels:
+          access: "true"
+    ports:
+    - protocol: TCP
+      port: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: lab157web
+  name: lab157web
+  namespace: restricted
+spec:
+  containers:
+  - image: nginx:1.14.2
+    name: lab157web
+    imagePullPolicy: IfNotPresent
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: lab157access
+    access: "true"
+  name: lab157access
+  namespace: access
+spec:
+  nodeName: kube-node1
+  containers:
+  - image: busybox
+    name: lab157access
+    args:
+    - sleep
+    - infinity
+    imagePullPolicy: IfNotPresent
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

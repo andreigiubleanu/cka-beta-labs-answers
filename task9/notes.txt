@@ -1,0 +1,6 @@
+ 3589  k get nodes
+ 3590  ssh root@kube-node2 'systemctl stop kubelet'
+ 3591  k get nodes  # returns kube-node2 not ready
+ 3592  ssh root@kube-node2 'systemctl start kubelet'
+ 3592  ssh root@kube-node2 'systemctl status kubelet'
+ 3593  k get nodes  # returns kube-node2 as ready

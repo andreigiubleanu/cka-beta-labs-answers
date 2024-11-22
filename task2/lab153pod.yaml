@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lab153pod
+spec:
+  imagePullSecrets: 
+  - name:  docker-secret
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    imagePullPolicy: IfNotPresent
+    ports:
+     - containerPort: 80
+  - name: redis
+    image: redis
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 6379
+  tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"

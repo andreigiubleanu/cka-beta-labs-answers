@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: lab1510deploy
+  name: lab1510deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lab1510deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: lab1510deploy
+    spec:
+      containers:
+      - image: nginx:1.14.2
+        name: nginx
+        resources: {}
+status: {}

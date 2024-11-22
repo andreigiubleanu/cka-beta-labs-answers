@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lab157-network-policy
+  namespace: restricted
+spec:            
+  podSelector:
+    matchLabels:
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          type: access
+    - podSelector:
+        matchLabels:
+          access: "true"
+    ports:
+    - protocol: TCP
+      port: 80

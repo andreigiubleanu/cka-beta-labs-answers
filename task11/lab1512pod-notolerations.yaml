@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lab1512pod-notolerations
+spec:
+  nodeName: kube-node2
+  imagePullSecrets: 
+  - name:  docker-secret
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    imagePullPolicy: IfNotPresent
+    ports:
+     - containerPort: 80

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: lab154deploy
+  name: lab154deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lab154deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: lab154deploy
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      initContainers:
+      - command:
+        - sleep
+        - "30"
+        image: nginx:1.14.2
+        imagePullPolicy: IfNotPresent
+        name: busybox
+        resources: {}
+status: {}
